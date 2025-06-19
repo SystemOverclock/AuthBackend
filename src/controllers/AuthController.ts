@@ -49,9 +49,5 @@ export const validateCode = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Código inválido ou expirado' });
   }
 
-  await prisma.users.deleteMany({
-    where: { email },
-  });
-
   res.json({ message: 'Código validado com sucesso!' });
 };
