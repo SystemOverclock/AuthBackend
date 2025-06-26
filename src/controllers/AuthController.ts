@@ -12,22 +12,25 @@ export const sendCode = async (req: Request, res: Response) => {
 
   const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
+  /* Validação de e-mail existente comentada
   const existing = await prisma.users.findUnique({
     where: { email: email },
   });
 
   if (existing) {
-    await prisma.users.update({
-      where: { email: email  },
-      data: {
-        access_code: code,
-        expires_at: expiresAt,
-      },
-    });
-    await sendEmail(email, code);
   } else {
     console.log('O e-mail não foi encontrado.', new Date()); 
   }
+  */
+
+  await prisma.users.update({
+    where: { email: email  },
+    data: {
+      access_code: code,
+      expires_at: expiresAt,
+    },
+  });
+  await sendEmail(email, code);
 
   res.json({ message: 'Código enviado para seu e-mail' });
 };
